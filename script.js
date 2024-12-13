@@ -3,15 +3,15 @@ $('#cng').click(function () {
   let c = ['red', null, 'blue', null, 'green', 'yellow', null].sort(
     () => 0.5 - Math.random()
   );
-  showPdf(_base64, c[0]);
+  showPdf('pdf-container',_base64, c[0]);
 });
 
 $('#file').change(async (ev) => {
   _base64 = await getBase64(ev.target.files[0]);
-  showPdf(_base64, 'red');
+  showPdf('pdf-container',_base64, 'red');
 });
-function showPdf(pdfData, colorList = null) {
-  let container = document.getElementById('pdf-container');
+function showPdf(id,pdfData, colorList = null) {
+  let container = document.getElementById(id);
   container.innerHTML = '';
   pdfjsLib.getDocument({ data: atob(pdfData) }).promise.then((pdf) => {
     let pageNo = Math.floor(Math.random() * pdf._pdfInfo.numPages + 1);
